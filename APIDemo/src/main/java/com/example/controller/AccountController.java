@@ -9,26 +9,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.User;
+import com.example.dto.LoginDTO;
 import com.example.dto.UserDTO;
 import com.example.services.UserService;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/account")
+public class AccountController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping(path="/add") // Map ONLY POST Requests
+	@PostMapping(path="/create") // Map ONLY POST Requests
 	  public @ResponseBody String addNewUser (@RequestBody UserDTO userDTO) {
 	    // @ResponseBody means the returned String is the response, not a view name
 	    // @RequestParam means it is a parameter from the GET or POST request
-
-	    User n = new User();
-	    n.setName(userDTO.getName());
-	    n.setEmail(userDTO.getEmail());
-	    userService.save(n);
-	    return "Saved";
+	    userService.createAccount(userDTO);
+	    return "Success";
+	  }
+	
+	@PostMapping(path="/login") // Map ONLY POST Requests
+	  public @ResponseBody boolean addNewUser (@RequestBody LoginDTO loginDTO) {
+	    // @ResponseBody means the returned String is the response, not a view name
+	    // @RequestParam means it is a parameter from the GET or POST request
+		User user = userService.getUserByUsername(loginDTO.getUsername());
+		if(user == null)
+			return false;
+	    return userService.verifyPassword(user, loginDTO.getPassword());
 	  }
 	
 	@GetMapping(path="/all")
