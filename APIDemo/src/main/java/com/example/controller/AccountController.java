@@ -20,18 +20,14 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping(path="/create") // Map ONLY POST Requests
+	@PostMapping(path="/create")
 	  public @ResponseBody String addNewUser (@RequestBody UserDTO userDTO) {
-	    // @ResponseBody means the returned String is the response, not a view name
-	    // @RequestParam means it is a parameter from the GET or POST request
 	    userService.createAccount(userDTO);
 	    return "Success";
 	  }
 	
-	@PostMapping(path="/login") // Map ONLY POST Requests
+	@PostMapping(path="/login")
 	  public @ResponseBody boolean addNewUser (@RequestBody LoginDTO loginDTO) {
-	    // @ResponseBody means the returned String is the response, not a view name
-	    // @RequestParam means it is a parameter from the GET or POST request
 		User user = userService.getUserByUsername(loginDTO.getUsername());
 		if(user == null)
 			return false;
@@ -40,7 +36,6 @@ public class AccountController {
 	
 	@GetMapping(path="/all")
 	  public @ResponseBody Iterable<User> getAllUsers() {
-	    // This returns a JSON or XML with the users
 	    return userService.findAll();
 	  }
 }
