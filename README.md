@@ -1,2 +1,2 @@
 # SpringBoot API Documentation
-Build a microservice with Swagger API documentation, JWT API Security, MS SQL DB connectivity
+Build a microservice with Swagger API documentation, JWT API Security, MS SQL DB connectivity, Password Encoder
